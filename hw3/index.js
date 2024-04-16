@@ -144,3 +144,17 @@ function power(base = 1, exponent = 1, result = 1) {
     if (exponent <= 0) return result;
     else return power(base, exponent - 1, result * base);
 }
+
+// Task 5: Lazy Evaluation and Generators
+
+function lazyMap(array = [], mapper = () => {}) {
+    if (!Array.isArray(array) || typeof mapper !== "function")
+        throw new Error("Incorrect arguments");
+    let lazyCount = 0;
+    return () => {
+        if (lazyCount >= array.length) return array;
+        array[lazyCount] = mapper(array[lazyCount]);
+        lazyCount++;
+        return array;
+    };
+}
