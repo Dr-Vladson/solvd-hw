@@ -158,3 +158,11 @@ function lazyMap(array = [], mapper = () => {}) {
         return array;
     };
 }
+
+function fibonacciGenerator() {
+    const result =
+        (fibonacciGenerator.first || 0) + (fibonacciGenerator.second || 1);
+    fibonacciGenerator.first = fibonacciGenerator.second;
+    fibonacciGenerator.second = result;
+    return result;
+}
