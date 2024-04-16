@@ -130,6 +130,24 @@ function createCounter() {
     return () => ++count;
 }
 
+function repeatFunction(func, repeatsAmount) {
+    if (
+        typeof func !== "function" ||
+        typeof repeatsAmount !== "number" ||
+        isNaN(repeatsAmount) ||
+        !isFinite(repeatsAmount)
+    )
+        throw new Error("Incorrect arguments");
+    if (repeatsAmount < 0) {
+        return (...args) => {
+            while (true) func(...args);
+        };
+    }
+    return (...args) => {
+        for (let i = 0; i < repeatsAmount; i++) func(...args);
+    };
+}
+
 // Task 4: Recursion and Tail Call Optimization
 
 function calculateFactorial(n = 1, result = 1) {
