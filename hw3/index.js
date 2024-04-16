@@ -50,6 +50,13 @@ class Person {
     }
 }
 
+class Student {
+    constructor(name, grades) {
+        this.name = name;
+        this.grades = grades;
+    }
+}
+
 function getFullName(person) {
     if (!(person instanceof Person)) throw new Error("Incorrect arguments");
     return `${person.firstName} ${person.lastName}`;
@@ -78,4 +85,40 @@ function sortAlphabetically(values) {
 function filterUniqueWords(text) {
     if (typeof text !== "string") throw new Error("Incorrect arguments");
     return sortAlphabetically(filterUniqueValues(getWordsOfText(text)));
+}
+
+function getSum(values) {
+    if (!Array.isArray(values)) throw new Error("Incorrect arguments");
+    const gettingSum = (sum, value) => {
+        if (typeof value !== "number" || isNaN(value))
+            throw new Error("Incorrect arguments");
+        return sum + value;
+    };
+    return values.reduce(gettingSum, 0);
+}
+
+function devide(devident, devisor) {
+    if (
+        typeof devident !== "number" ||
+        isNaN(devident) ||
+        typeof devisor !== "number" ||
+        isNaN(devisor)
+    )
+        throw new Error("Incorrect arguments");
+    return devident / devisor;
+}
+
+function getAvg(values) {
+    if (!Array.isArray(values)) throw new Error("Incorrect arguments");
+    return devide(getSum(values), values.length);
+}
+
+function getAverageGrade(students) {
+    if (!Array.isArray(students)) throw new Error("Incorrect arguments");
+    const gettingStudentAvg = (student) => {
+        if (!(student instanceof Student))
+            throw new Error("Incorrect arguments");
+        return getAvg(student.grades);
+    };
+    return getAvg(students.map(gettingStudentAvg));
 }
