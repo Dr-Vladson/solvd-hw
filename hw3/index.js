@@ -136,3 +136,11 @@ function calculateFactorial(n = 1, result = 1) {
     if (n <= 1) return result;
     else return calculateFactorial(n - 1, n * result);
 }
+
+function power(base = 1, exponent = 1, result = 1) {
+    if (base === 1) return 1;
+    if (base === 0) return 0;
+
+    if (exponent <= 0) return result;
+    else return power(base, exponent - 1, result * base);
+}
