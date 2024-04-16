@@ -54,3 +54,28 @@ function getFullName(person) {
     if (!(person instanceof Person)) throw new Error("Incorrect arguments");
     return `${person.firstName} ${person.lastName}`;
 }
+
+function getWordsOfText(text) {
+    if (typeof text !== "string") throw new Error("Incorrect arguments");
+    return text.trim().split(" ");
+}
+
+function filterUniqueValues(values) {
+    if (!Array.isArray(values)) throw new Error("Incorrect arguments");
+    return [...new Set(values)];
+}
+
+function sortAlphabetically(values) {
+    if (!Array.isArray(values)) throw new Error("Incorrect arguments");
+    const sortingAlphabetically = (value1, value2) => {
+        if (typeof value1 !== "string" || typeof value2 !== "string")
+            throw new Error("Incorrect arguments");
+        return value1.localeCompare(value2);
+    };
+    return values.sort(sortingAlphabetically);
+}
+
+function filterUniqueWords(text) {
+    if (typeof text !== "string") throw new Error("Incorrect arguments");
+    return sortAlphabetically(filterUniqueValues(getWordsOfText(text)));
+}
