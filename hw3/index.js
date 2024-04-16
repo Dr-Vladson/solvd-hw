@@ -41,3 +41,16 @@ function calculateTotalPrice(products) {
         return totalPrice + price;
     }, 0);
 }
+
+// Task 2: Function Composition and Point-Free Style
+class Person {
+    constructor(firstName, lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+}
+
+function getFullName(person) {
+    if (!(person instanceof Person)) throw new Error("Incorrect arguments");
+    return `${person.firstName} ${person.lastName}`;
+}
