@@ -129,3 +129,10 @@ function createCounter() {
     let count = 0;
     return () => ++count;
 }
+
+// Task 4: Recursion and Tail Call Optimization
+
+function calculateFactorial(n = 1, result = 1) {
+    if (n <= 1) return result;
+    else return calculateFactorial(n - 1, n * result);
+}
