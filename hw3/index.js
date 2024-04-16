@@ -1,4 +1,4 @@
-// task 1
+// Task 1: Immutability and Pure Functions
 class Product {
     constructor(name, price, description) {
         this.name = name;
@@ -27,4 +27,17 @@ function calculateDiscountedPrice(products, discount) {
                     : null,
         };
     });
+}
+
+function calculateTotalPrice(products) {
+    if (!Array.isArray(products)) throw new Error("Incorrect arguments");
+
+    return products.reduce((totalPrice, product) => {
+        if (!(product instanceof Product))
+            throw new Error("Incorrect arguments");
+        const price = product.price;
+        if (typeof price !== "number" || isNaN(price) || price < 0)
+            return totalPrice;
+        return totalPrice + price;
+    }, 0);
 }
