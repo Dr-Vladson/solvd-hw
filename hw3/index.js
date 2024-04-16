@@ -122,3 +122,10 @@ function getAverageGrade(students) {
     };
     return getAvg(students.map(gettingStudentAvg));
 }
+
+// Task 3: Closures and Higher-Order Functions
+
+function createCounter() {
+    let count = 0;
+    return () => ++count;
+}
