@@ -169,18 +169,25 @@ function lazyMap(array = [], mapper = () => {}) {
     if (!Array.isArray(array) || typeof mapper !== "function")
         throw new Error("Incorrect arguments");
     let lazyCount = 0;
-    return () => {
-        if (lazyCount >= array.length) return array;
-        array[lazyCount] = mapper(array[lazyCount]);
-        lazyCount++;
-        return array;
+    return {
+        next() {
+            if (lazyCount >= array.length) return { value: array };
+            array[lazyCount] = mapper(array[lazyCount]);
+            lazyCount++;
+            return { value: array };
+        },
     };
 }
 
 function fibonacciGenerator() {
-    const result =
-        (fibonacciGenerator.first || 0) + (fibonacciGenerator.second || 1);
-    fibonacciGenerator.first = fibonacciGenerator.second;
-    fibonacciGenerator.second = result;
-    return result;
+    let first;
+    let second;
+    return {
+        next() {
+            const value = (first || 0) + (second || 1);
+            first = second;
+            second = value;
+            return { value };
+        },
+    };
 }
