@@ -117,3 +117,26 @@ class BankAccount {
         targetBankAcc.balance = targetBankAcc.balance + amount;
     }
 }
+
+// Task 4: Advanced Property Descriptors
+
+function createImmutableObject(obj = {}) {
+    const newObj = {};
+
+    Object.keys(obj).forEach((key) => {
+        const property = obj[key];
+        if (typeof property === "object" && property) {
+            newObj[key] = createImmutableObject(property);
+        } else {
+            Object.defineProperty(newObj, key, {
+                ...Object.getOwnPropertyDescriptor(obj, key),
+                writable: false,
+            });
+        }
+    });
+
+    return newObj;
+}
+
+const personCopy = createImmutableObject(person);
+console.log(personCopy === person); // false
