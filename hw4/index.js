@@ -140,3 +140,47 @@ function createImmutableObject(obj = {}) {
 
 const personCopy = createImmutableObject(person);
 console.log(personCopy === person); // false
+
+// Task 5: Object Observation
+
+function observeObject(
+    obj = {},
+    observer = (info = { property: "some", method: "get" }) => {}
+) {
+    if (!obj || typeof obj !== "object" || typeof observer !== "function")
+        throw new Error("Incorect args");
+    const result = {};
+    Object.keys(obj).forEach((key) => {
+        const property = obj[key];
+        if (typeof property !== "function") {
+            const propertiesDescriptor = {};
+            propertiesDescriptor[`#${key}`] = {
+                value: property,
+                enumerable: false,
+                writable: true,
+            };
+            propertiesDescriptor[key] = {
+                set: function (value) {
+                    observer({
+                        property: key,
+                        method: "set",
+                    });
+                    this[`#${key}`] = value;
+                },
+                get: function () {
+                    observer({
+                        property: key,
+                        method: "get",
+                    });
+                    return this[`#${key}`];
+                },
+            };
+            Object.defineProperties(result, propertiesDescriptor);
+        } else result[key] = property;
+    });
+    return result;
+}
+
+const observedPerson = observeObject(person, (info) =>
+    console.log(info.property + " " + info.method)
+);
