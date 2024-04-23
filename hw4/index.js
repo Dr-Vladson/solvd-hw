@@ -85,3 +85,35 @@ function deleteNonConfigurable(obj = {}, key = "") {
         throw new Error("The provided property is non-configurable");
     delete obj[key];
 }
+
+// Task 3: Object Property Getters and Setters
+
+class BankAccount {
+    constructor(balance) {
+        typeof balance === "number" && !isNaN(balance) && isFinite(balance)
+            ? (this._balance = balance)
+            : (this._balance = 1000);
+    }
+    get formattedBalance() {
+        return `$${this._balance}`;
+    }
+    get balance() {
+        return this._balance;
+    }
+    set balance(value) {
+        if (typeof value === "number" && !isNaN(value) && isFinite(value))
+            this._balance = value;
+    }
+    transfer(targetBankAcc, amount) {
+        if (
+            !(targetBankAcc instanceof BankAccount) ||
+            targetBankAcc === this ||
+            typeof amount !== "number" ||
+            isNaN(amount) ||
+            !isFinite(amount)
+        )
+            throw new Error("Incorrect args");
+        this.balance = this.balance - amount;
+        targetBankAcc.balance = targetBankAcc.balance + amount;
+    }
+}
