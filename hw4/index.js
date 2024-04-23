@@ -7,19 +7,19 @@ const person = {
     email: "john.doe@example.com",
     updateInfo(obj = {}) {
         if (!obj || typeof obj !== "object") throw new Error("Incorect args");
-        if (obj.firstName)
+        if ("firstName" in obj)
             Object.defineProperty(person, "firstName", {
                 value: obj.firstName,
             });
-        if (obj.lastName)
+        if ("lastName" in obj)
             Object.defineProperty(person, "lastName", {
                 value: obj.lastName,
             });
-        if (obj.age)
+        if ("age" in obj)
             Object.defineProperty(person, "age", {
                 value: obj.age,
             });
-        if (obj.email)
+        if ("email" in obj)
             Object.defineProperty(person, "email", {
                 value: obj.email,
             });
@@ -37,3 +37,51 @@ Object.defineProperty(person, "address", {
     configurable: false,
     enumerable: false,
 });
+
+// Task 2: Object Property Enumeration and Deletion
+
+const product = {
+    name: "Laptop",
+    price: 1000,
+    quantity: 5,
+};
+
+Object.defineProperties(product, {
+    price: {
+        enumerable: false,
+        writable: false,
+    },
+    quantity: {
+        enumerable: false,
+        writable: false,
+    },
+});
+
+function getTotalPrice(product = {}) {
+    if (!product || typeof product !== "object")
+        throw new Error("Incorect args");
+    const price = Object.getOwnPropertyDescriptor(product, "price")?.value;
+    const quantity = Object.getOwnPropertyDescriptor(
+        product,
+        "quantity"
+    )?.value;
+    if (
+        typeof price !== "number" ||
+        typeof quantity !== "number" ||
+        isNaN(price) ||
+        isNaN(quantity)
+    ) {
+        throw new Error("Incorect product properties");
+    }
+
+    return price * quantity;
+}
+
+function deleteNonConfigurable(obj = {}, key = "") {
+    if (!product || typeof product !== "object" || typeof key !== "string")
+        throw new Error("Incorect args");
+    if (!(key in obj)) throw new Error("No such key in object provided");
+    if (!Object.getOwnPropertyDescriptor(obj, key).configurable)
+        throw new Error("The provided property is non-configurable");
+    delete obj[key];
+}
