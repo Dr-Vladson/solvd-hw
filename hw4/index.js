@@ -207,3 +207,23 @@ function deepCloneObject(obj = {}) {
     return recursiveClone(obj);
 }
 
+// Task 7: Object Property Validation
+
+function validateObject(obj = {}, schemaObj = {}) {
+    if (
+        !obj ||
+        typeof obj !== "object" ||
+        !schemaObj ||
+        typeof schemaObj !== "object"
+    )
+        throw new Error("Incorect args");
+    for (let key of Object.keys(schemaObj)) {
+        if (
+            typeof obj[key] !== typeof schemaObj[key] ||
+            (Array.isArray(obj[key]) && !Array.isArray(schemaObj[key])) ||
+            (!Array.isArray(obj[key]) && Array.isArray(schemaObj[key]))
+        )
+            return false;
+    }
+    return true;
+}
