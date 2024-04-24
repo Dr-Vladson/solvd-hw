@@ -184,3 +184,26 @@ function observeObject(
 const observedPerson = observeObject(person, (info) =>
     console.log(info.property + " " + info.method)
 );
+
+// Task 6: Object Deep Cloning
+
+function deepCloneObject(obj = {}) {
+    const objOrigAndCloneMap = new Map();
+
+    const recursiveClone = (obj) => {
+        if (typeof obj !== "object" || !obj) return obj;
+
+        if (objOrigAndCloneMap.has(obj)) return objOrigAndCloneMap.get(obj);
+
+        const newObj = Array.isArray(obj) ? [] : {};
+        objOrigAndCloneMap.set(obj, newObj);
+
+        Object.keys(obj).forEach((key) => {
+            newObj[key] = recursiveClone(obj[key]);
+        });
+
+        return newObj;
+    };
+    return recursiveClone(obj);
+}
+
