@@ -43,3 +43,20 @@ const getAreFromOneFamily = (human1, human2) => {
 };
 const familyRepresentatives = customFilterUnique(humans, getAreFromOneFamily);
 console.log(familyRepresentatives);
+
+// Task 2: Array Chunking
+
+function chunkArray(array = [], chunkSize = 0) {
+    if (
+        !Array.isArray(array) ||
+        typeof chunkSize !== "number" ||
+        isNaN(chunkSize) ||
+        !isFinite(chunkSize)
+    )
+        throw new Error("Incorrect args");
+    const result = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+        result.push(array.slice(i, i + chunkSize));
+    }
+    return result;
+}
