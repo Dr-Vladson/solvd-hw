@@ -73,3 +73,30 @@ function customShuffle(array) {
     }
     return result;
 }
+
+// Task 4: Array Intersection and Union
+
+function getArrayIntersection(array1, array2) {
+    if (!Array.isArray(array1) || !Array.isArray(array2))
+        throw new Error("Incorrect args");
+    const result = [];
+    for (let el1 of array1) {
+        if (array2.includes(el1)) result.push(el1);
+    }
+    return result;
+}
+
+function getArrayUnion(array1, array2) {
+    if (!Array.isArray(array1) || !Array.isArray(array2))
+        throw new Error("Incorrect args");
+    const result = [];
+    for (let el1 of array1) {
+        if (array2.includes(el1)) continue;
+        result.push(el1);
+    }
+    for (let el2 of array2) {
+        if (array1.includes(el2)) continue;
+        result.push(el2);
+    }
+    return result;
+}
