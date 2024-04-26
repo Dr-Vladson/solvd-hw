@@ -100,3 +100,60 @@ function getArrayUnion(array1, array2) {
     }
     return result;
 }
+
+// Task 5: Array Performance Analysis
+
+function measureArrayPerformance(
+    func = (callback, array) => {},
+    callback = (el) => {},
+    array
+) {
+    const startTime = performance.now();
+    func(callback, array || undefined);
+    const endTime = performance.now();
+    return endTime - startTime;
+}
+
+function myMap(callback = () => {}, array) {
+    const result = [];
+    for (let el of array) result.push(callback(el));
+    return result;
+}
+
+function myFilter(callback = () => {}, array) {
+    const result = [];
+    for (let el of array) {
+        if (callback(el)) result.push(el);
+    }
+    return result;
+}
+
+function myReduce(callback = (acc, value) => {}, array, initialValue) {
+    let result = initialValue || 0;
+    for (let el of array) {
+        result = callback(result, el);
+    }
+    return result;
+}
+
+// tests
+const arr = [];
+for (let i = 0; i < 10000; i++) arr.push(i);
+const mapCallback = (el) => el + 1;
+const filterCallback = (el) => el % 2 === 0;
+const reduceCallback = (acc, value) => acc + value;
+
+console.log(
+    measureArrayPerformance(Array.prototype.map.bind(arr), mapCallback)
+);
+console.log(measureArrayPerformance(myMap, mapCallback, arr));
+
+console.log(
+    measureArrayPerformance(Array.prototype.filter.bind(arr), filterCallback)
+);
+console.log(measureArrayPerformance(myFilter, filterCallback, arr));
+
+console.log(
+    measureArrayPerformance(Array.prototype.reduce.bind(arr), reduceCallback)
+);
+console.log(measureArrayPerformance(myReduce, reduceCallback, arr));
