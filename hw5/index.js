@@ -60,3 +60,16 @@ function chunkArray(array = [], chunkSize = 0) {
     }
     return result;
 }
+
+function customShuffle(array) {
+    if (!Array.isArray(array)) throw new Error("Incorrect args");
+    const n = array.length;
+    const result = [...array];
+    for (let i = 0; i <= n - 2; i++) {
+        let j = Math.floor(Math.random() * (n - i) + i);
+        const temp = result[i];
+        result[i] = result[j];
+        result[j] = temp;
+    }
+    return result;
+}
