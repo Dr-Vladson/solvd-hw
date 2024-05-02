@@ -1,12 +1,12 @@
 // Task 1: Advanced Array Filtering
 
-function customFilterUnique(array, getAreSame = (element1, element2) => false) {
-    if (!Array.isArray(array) || typeof getAreSame !== "function")
+function customFilterUnique(array, callback = (element) => element) {
+    if (!Array.isArray(array) || typeof callback !== "function")
         throw new Error("Incorrect args");
     const result = [];
     loop1: for (let element1 of array) {
         for (let element2 of result) {
-            if (getAreSame(element1, element2)) {
+            if (callback(element1) === callback(element2)) {
                 continue loop1;
             }
         }
@@ -37,10 +37,7 @@ const humans = [
         surname: "Joui",
     },
 ];
-const getAreFromOneFamily = (human1, human2) => {
-    if (human1.surname === human2.surname) return true;
-    return false;
-};
+const getAreFromOneFamily = (human) => human.surname;
 const familyRepresentatives = customFilterUnique(humans, getAreFromOneFamily);
 console.log(familyRepresentatives);
 
