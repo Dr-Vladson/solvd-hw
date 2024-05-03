@@ -78,7 +78,7 @@ function getArrayIntersection(array1, array2) {
         throw new Error("Incorrect args");
     const result = [];
     for (let el1 of array1) {
-        if (array2.includes(el1)) result.push(el1);
+        if (array2.includes(el1) && !result.includes(el1)) result.push(el1);
     }
     return result;
 }
@@ -97,6 +97,14 @@ function getArrayUnion(array1, array2) {
     }
     return result;
 }
+
+console.log(
+    getArrayIntersection(
+        [1, 2, 90, 2, 3, 5, 5, 6, 7, 90],
+        [90, 90, 2, 9, 0, 0, 7, 8, 3, 7]
+    )
+);
+console.log(getArrayUnion([1, 2, 3, 5, 6, 7], [2, 9, 0, 8, 3, 7]));
 
 // Task 5: Array Performance Analysis
 
